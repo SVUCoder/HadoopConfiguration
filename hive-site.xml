@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl" ?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+    <!--远程连接mysql的主机名，这里为namenode-->
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://namenode:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+        <description>JDBCconnectstringforaJDBCmetastore</description>
+    </property>
+    <!--链接mysql数据库-->
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>com.mysql.jdbc.Driver</value>
+        <description>DriverclassnameforaJDBCmetastore</description>
+    </property>
+    <!--root用户登陆-->
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>root</value>
+        <description>Usernametouseagainstmetastoredatabase</description>
+    </property>
+    <!--mysql的密码-->
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>JIANgege15423824563.</value>
+        <description>passwordtouseagainstmetastoredatabase</description>
+    </property>
+    <!--关闭本地数据库连接-->
+    <property>
+        <name>hive.metastore.local</name>
+        <value>false</value>
+    </property>
+    <!--远程数据库的ThriftURI-->
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://192.168.1.188:9083</value>
+        <description>ThriftURIfortheremotemetastore.Usedbymetastoreclienttoconnecttoremotemetastore.</description>
+    </property>
+</configuration>
