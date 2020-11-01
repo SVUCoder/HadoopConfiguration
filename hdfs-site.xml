@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl" ?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <!--关闭dfs安全配置-->
+  <property>
+    <name>dfs.permissions</name>
+    <value>false</value>
+  </property>
+  <!--设置HDFS副本个数-->
+  <property>
+    <name>dfs.replication</name>
+    <value>2</value>
+  </property>
+  <!-- 这个参数用于确定将HDFS文件系统的元信息保存在什么目录下。
+如果这个参数设置为多个目录，那么这些目录下都保存着元信息的多个备份-->
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>/opt/hd_space/hdfs/name</value>
+  </property>
+  <!-- 这个参数用于确定将HDFS文件系统的数据保存在什么目录下。
+我们可以将这个参数设置为多个分区上目录，即可将HDFS建立在不同分区上。-->
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/opt/hd_space/hdfs/data</value>
+  </property>
+  <!--启动dfs在web上的展示-->
+  <property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+  </property>
+  <!--指定 hdfs 的 nameservice 为 nsv，需要和 core-site.xml 中的保持一致-->
+  <property>
+    <name>dfs.nameservices</name>
+    <value>nsv</value>
+  </property>
+  <property>
+    <!-- nsv 下面有两个 namenode，分别是 nn1,nn2 -->
+  </property>
+  <property>
+    <name>dfs.ha.namenodes.nsv</name>
+    <value>nn1,nn2</value>
+  </property>
+  <property>
+    <!-- nn1 的 RPC 通信地址 -->
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.nsv.nn1</name>
+    <value>namenode:9000</value>
+  </property>
+  <property>
+    <!-- nn1 的 http 通信地址 -->
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.nsv.nn1</name>
+    <value>namenode:50070</value>
+  </property>
+  <property>
+    <name>dfs.namenode.servicerpc-address.nsv.nn1</name>
+    <value>namenode:53310</value>
+  </property>
+  <property>
+    <!-- nn2 的 RPC 通信地址 -->
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.nsv.nn2</name>
+    <value>datanode1:9000</value>
+  </property>
+  <property>
+    <!-- nn2 的 http 通信地址 -->
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.nsv.nn2</name>
+    <value>datanode1:50070</value>
+  </property>
+  <property>
+    <name>dfs.namenode.servicerpc-address.nsv.nn2</name>
+    <value>datanode1:53310</value>
+  </property>
+  <property>
+    <!-- 指定 namenode 的元数据在 JournalNode 上的存放的位置 -->
+  </property>
+  <property>
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://namenode:8485;datanode1:8485;datanode2:8485/nsv</value>
+  </property>
+  <property>
+    <!-- 指定 Journal 在本地磁盘存放数据的位置 -->
+  </property>
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/opt/hd_space/journal</value>
+  </property>
+  <property>
+    <!-- 开启 namenode 失败自动切换-->
+  </property>
+  <property>
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <!-- 配置失败自动切换实现方式 -->
+  </property>
+  <property>
+    <name>dfs.client.failover.proxy.provider.nsv</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+  <property>
+    <!-- 配置隔离机制方法，多个机制用换行分隔，即每个机制暂用一行-->
+  </property>
+  <property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>
+      sshfence
+      shell(bin/true)
+    </value>
+  </property>
+  <property>
+    <!-- 使用 sshfence 隔离机制时需要 ssh 免密登陆 -->
+  </property>
+  <property>
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>/root/.ssh/id_rsa</value>
+  </property>
+  <property>
+    <!-- 配置 sshfence 隔离机制超时时间 -->
+  </property>
+  <property>
+    <name>dfs.ha.fencing.ssh.connect-timeout</name>
+    <value>30000</value>
+  </property>
+  <property>
+    <name>dfs.failover-controller.cli-check.rpc-timeout.ms</name>
+    <value>60000</value>
+  </property>
+</configuration>
